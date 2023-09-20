@@ -13,8 +13,8 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
   icon: "smiley",
   category: "common",
   attributes: {
-    skyColor: { type: "string" },
-    grassColor: { type: "string" },
+    question: { type: "string" },
+    answers: { type: "array", default: [""] },
   },
   edit: EditComponent,
   save: function (props) {
@@ -23,34 +23,64 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
 });
 
 function EditComponent(props) {
-  function updateSkyColor(event) {
-    props.setAttributes({ skyColor: event.target.value });
+  function updateQuestion(val) {
+    props.setAttributes({ question: val });
   }
-
-  function updateGrassColor(event) {
-    props.setAttributes({ grassColor: event.target.value });
+  function deleteAnswer(indexToDelete) {
+    const newAnswers = props.attributes.answers.filter(function (x, index) {
+      return index != indexToDelete;
+    });
+    props.setAttributes({ answers: newAnswers });
   }
-
   return (
     <div className="paying-attention-edit-block">
-      <TextControl style={{ fontSize: "20px" }} label="Question:" />
+      <TextControl
+        style={{ fontSize: "20px" }}
+        label="Question:"
+        value={props.attributes.question}
+        onChange={updateQuestion}
+      />
       <p style={{ fontSize: "13px", margin: "20px 0 8px 0" }}>Answers:</p>
-      <Flex>
-        <FlexBlock>
-          <TextControl />
-        </FlexBlock>
-        <FlexItem>
-          <Button>
-            <Icon icon="star-empty" className="mark-as-correct" />
-          </Button>
-        </FlexItem>
-        <FlexItem>
-          <Button isLink className="attention-delete">
-            Delete
-          </Button>
-        </FlexItem>
-      </Flex>
-      <Button isPrimary>Add an option</Button>
+      {props.attributes.answers.map(function (answer, index) {
+        return (
+          <Flex>
+            <FlexBlock>
+              <TextControl
+                value={answer}
+                onChange={(newValue) => {
+                  const newAnswers = props.attributes.answers.concat([]);
+                  newAnswers[index] = newValue;
+                  props.setAttributes({ answers: newAnswers });
+                }}
+              />
+            </FlexBlock>
+            <FlexItem>
+              <Button>
+                <Icon icon="star-empty" className="mark-as-correct" />
+              </Button>
+            </FlexItem>
+            <FlexItem>
+              <Button
+                isLink
+                className="attention-delete"
+                onClick={() => deleteAnswer(index)}
+              >
+                Delete
+              </Button>
+            </FlexItem>
+          </Flex>
+        );
+      })}
+      <Button
+        isPrimary
+        onClick={() => {
+          props.setAttributes({
+            answers: props.attributes.answers.concat([""]),
+          });
+        }}
+      >
+        Add an option
+      </Button>
     </div>
   );
 }

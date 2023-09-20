@@ -122,11 +122,12 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
   icon: "smiley",
   category: "common",
   attributes: {
-    skyColor: {
+    question: {
       type: "string"
     },
-    grassColor: {
-      type: "string"
+    answers: {
+      type: "array",
+      default: [""]
     }
   },
   edit: EditComponent,
@@ -135,14 +136,17 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
   }
 });
 function EditComponent(props) {
-  function updateSkyColor(event) {
+  function updateQuestion(val) {
     props.setAttributes({
-      skyColor: event.target.value
+      question: val
     });
   }
-  function updateGrassColor(event) {
+  function deleteAnswer(indexToDelete) {
+    const newAnswers = props.attributes.answers.filter(function (x, index) {
+      return index != indexToDelete;
+    });
     props.setAttributes({
-      grassColor: event.target.value
+      answers: newAnswers
     });
   }
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -151,20 +155,39 @@ function EditComponent(props) {
     style: {
       fontSize: "20px"
     },
-    label: "Question:"
+    label: "Question:",
+    value: props.attributes.question,
+    onChange: updateQuestion
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     style: {
       fontSize: "13px",
       margin: "20px 0 8px 0"
     }
-  }, "Answers:"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Flex, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.FlexBlock, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, null)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.FlexItem, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Icon, {
-    icon: "star-empty",
-    className: "mark-as-correct"
-  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.FlexItem, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    isLink: true,
-    className: "attention-delete"
-  }, "Delete"))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    isPrimary: true
+  }, "Answers:"), props.attributes.answers.map(function (answer, index) {
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Flex, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.FlexBlock, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+      value: answer,
+      onChange: newValue => {
+        const newAnswers = props.attributes.answers.concat([]);
+        newAnswers[index] = newValue;
+        props.setAttributes({
+          answers: newAnswers
+        });
+      }
+    })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.FlexItem, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Icon, {
+      icon: "star-empty",
+      className: "mark-as-correct"
+    }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.FlexItem, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+      isLink: true,
+      className: "attention-delete",
+      onClick: () => deleteAnswer(index)
+    }, "Delete")));
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    isPrimary: true,
+    onClick: () => {
+      props.setAttributes({
+        answers: props.attributes.answers.concat([""])
+      });
+    }
   }, "Add an option"));
 }
 }();
