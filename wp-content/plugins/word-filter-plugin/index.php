@@ -15,7 +15,26 @@ class WordFilterPlugin {
 function __construct() {
   //menu bar
   add_action('admin_menu', array($this, 'FilterMenu'));
+  add_action('admin_init', array($this, 'ourSettings'));
+ if(get_option('plugin_words_to_filter')) add_filter('the_content', array($this, 'filterLogic'));
 }
+
+function ourSettings(){
+add_settings_section('replacement-text-section', null, null, 'word-filter-options');
+register_setting('replacementFields', 'replacementText');
+add_settings_field('replacement-text', 'Filtered Text', array($this, 'replacementFieldHTML'), 'word-filter-options', 'replacement-text-section');
+}
+function replacementFieldHTML(){?>
+<input type="text" name="replacementText" value="<?php echo esc_attr(get_option('replacementText', '***')); ?>">
+<p class="description">Leave blank to simply remove the filtered words. </p>
+<?php }
+function filterLogic ($content) {
+  // convert the comma separated strings to an array
+  $bannedWords = explode(',', get_option('plugin_words_to_filter'));
+  $bannedWordstrimmed = array_map("trim", $bannedWords);
+  return str_ireplace($bannedWordstrimmed, esc_html(get_option('replacementText','****')), $content);
+}
+
   function FilterMenu() {
     // will get 7 arguments --> 1. document title shows in browser window, 2 -> text shown up in admin sidebar, 3-> Permission or capability that user has to see the page, 4-> short term or slug variable name for this, 5-> function that output the html itself. 6-> icon appear in admin menu, 7-> number we give it to show where it will be in our menu bar
   
@@ -66,7 +85,17 @@ function __construct() {
   <?php }
 
   function optionsSubPage() { ?>
-    Hello world from the options page.
+    <div class="wrap">
+      <h1>Word Filter Options</h1>
+      <form action="options.php" method ="POST">
+        <?php
+        settings_errors(); 
+        settings_fields('replacementFields');
+        do_settings_sections('word-filter-options');
+          submit_button();
+        ?>
+      </form>
+    </div>
   <?php }
 }
 //instance of the class
