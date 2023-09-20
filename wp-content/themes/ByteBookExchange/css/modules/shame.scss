@@ -323,10 +323,8 @@
 }
 
 // post-like
-.generic-content-post {
-  background-color: #333;
-}
-.generic-content-post .post-like-box {
+
+.generic-content .post-like-box {
   float: right;
   font-size: 1rem;
   background-color: #ededed;
@@ -339,7 +337,7 @@
   position: relative;
 }
 
-.generic-content-post .post-like-box:hover {
+.generic-content .post-like-box:hover {
   background-color: #dedede;
 }
 
