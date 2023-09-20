@@ -8,6 +8,31 @@ import {
   Icon,
 } from "@wordpress/components";
 
+(function () {
+  let locked = false;
+  wp.data.subscribe(function () {
+    const results = wp.data
+      .select("core/block-editor")
+      .getBlocks()
+      .filter(function (block) {
+        return (
+          block.name == "ourplugin/are-you-paying-attention" &&
+          block.attributes.correctAnswer == undefined
+        );
+      });
+
+    if (results.length && locked == false) {
+      locked = true;
+      wp.data.dispatch("core/editor").lockPostSaving("noanswer");
+    }
+
+    if (!results.length && locked) {
+      locked = false;
+      wp.data.dispatch("core/editor").unlockPostSaving("noanswer");
+    }
+  });
+})();
+
 wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
   title: "Are You Paying Attention?",
   icon: "smiley",
@@ -15,6 +40,7 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
   attributes: {
     question: { type: "string" },
     answers: { type: "array", default: [""] },
+    correctAnswer: { type: "number", default: undefined },
   },
   edit: EditComponent,
   save: function (props) {
@@ -31,6 +57,14 @@ function EditComponent(props) {
       return index != indexToDelete;
     });
     props.setAttributes({ answers: newAnswers });
+
+    if (indexToDelete == props.attributes.correctAnswer) {
+      props.setAttributes({ correctAnswer: undefined });
+    }
+  }
+
+  function markAsCorrect(index) {
+    props.setAttributes({ correctAnswer: index });
   }
   return (
     <div className="paying-attention-edit-block">
@@ -46,6 +80,7 @@ function EditComponent(props) {
           <Flex>
             <FlexBlock>
               <TextControl
+                autofocus={answer === ""}
                 value={answer}
                 onChange={(newValue) => {
                   const newAnswers = props.attributes.answers.concat([]);
@@ -55,8 +90,15 @@ function EditComponent(props) {
               />
             </FlexBlock>
             <FlexItem>
-              <Button>
-                <Icon icon="star-empty" className="mark-as-correct" />
+              <Button onClick={() => markAsCorrect(index)}>
+                <Icon
+                  icon={
+                    props.attributes.correctAnswer == index
+                      ? "star-filled"
+                      : "star-empty"
+                  }
+                  className="mark-as-correct"
+                />
               </Button>
             </FlexItem>
             <FlexItem>
