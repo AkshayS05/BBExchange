@@ -10,6 +10,7 @@ import {
 
 (function () {
   let locked = false;
+
   wp.data.subscribe(function () {
     const results = wp.data
       .select("core/block-editor")
@@ -49,9 +50,10 @@ wp.blocks.registerBlockType("ourplugin/are-you-paying-attention", {
 });
 
 function EditComponent(props) {
-  function updateQuestion(val) {
-    props.setAttributes({ question: val });
+  function updateQuestion(value) {
+    props.setAttributes({ question: value });
   }
+
   function deleteAnswer(indexToDelete) {
     const newAnswers = props.attributes.answers.filter(function (x, index) {
       return index != indexToDelete;
@@ -66,13 +68,14 @@ function EditComponent(props) {
   function markAsCorrect(index) {
     props.setAttributes({ correctAnswer: index });
   }
+
   return (
     <div className="paying-attention-edit-block">
       <TextControl
-        style={{ fontSize: "20px" }}
         label="Question:"
         value={props.attributes.question}
         onChange={updateQuestion}
+        style={{ fontSize: "20px" }}
       />
       <p style={{ fontSize: "13px", margin: "20px 0 8px 0" }}>Answers:</p>
       {props.attributes.answers.map(function (answer, index) {
@@ -80,7 +83,6 @@ function EditComponent(props) {
           <Flex>
             <FlexBlock>
               <TextControl
-                autofocus={answer === ""}
                 value={answer}
                 onChange={(newValue) => {
                   const newAnswers = props.attributes.answers.concat([]);
@@ -92,12 +94,12 @@ function EditComponent(props) {
             <FlexItem>
               <Button onClick={() => markAsCorrect(index)}>
                 <Icon
+                  className="mark-as-correct"
                   icon={
                     props.attributes.correctAnswer == index
                       ? "star-filled"
                       : "star-empty"
                   }
-                  className="mark-as-correct"
                 />
               </Button>
             </FlexItem>
@@ -121,7 +123,7 @@ function EditComponent(props) {
           });
         }}
       >
-        Add an option
+        Add another answer
       </Button>
     </div>
   );
