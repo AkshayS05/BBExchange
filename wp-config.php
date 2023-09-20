@@ -28,9 +28,9 @@ if(file_exists(dirname(__FILE__) . '/local.php')){
 	define( 'DB_HOST', 'localhost' );
 }
 	else{
-	define( 'DB_NAME', 'u856189523_bbExchange' );
-	define( 'DB_USER', 'u856189523_bbe	' );
-	define( 'DB_PASSWORD', 'Jamesmath;)1' );
+	define( 'DB_NAME', 'u856189523_bbExchange');
+	define( 'DB_USER', 'u856189523_bbe');
+	define( 'DB_PASSWORD', 'Jamesmath;)1');
 	define( 'DB_HOST', 'localhost' );
 }
 
