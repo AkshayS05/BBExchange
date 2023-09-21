@@ -13,7 +13,7 @@
 <header class="site-header">
       <div class="container">
         <h1 class="school-logo-text float-left">
-          <a href="<?php echo site_url() ?>"><strong>Byte Book</strong> Exchange</a>
+        <a href="<?php echo site_url(); ?>"><img src="<?php echo get_template_directory_uri(); ?>/images/bbe_logo.png" alt="Byte Book Exchange Logo"></a>
         </h1>
         <a href="<?php echo esc_url(site_url('/search')); ?>" class="js-search-trigger site-header__search-trigger"><i class="fa fa-search" aria-hidden="true"></i></a>
         <i class="site-header__menu-trigger mobile-menu-icon fa fa-bars" aria-hidden="true"></i>

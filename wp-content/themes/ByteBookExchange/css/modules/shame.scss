@@ -34,11 +34,16 @@
 }
 
 .school-logo-text {
-  position: relative;
+  position: absolute;
   z-index: 20;
-  margin: 0;
-  font-size: 1.75rem;
-  font-weight: 100;
+  margin: -35px;
+  height: 150px;
+}
+.school-logo-text a img {
+  height: 150px;
+  @media (max-width: 480px) {
+    height: 100px;
+  }
 }
 
 .school-logo-text strong {
