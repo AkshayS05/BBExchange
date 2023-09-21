@@ -141,7 +141,8 @@ divsToUpdate.forEach(function (div) {
 function Quiz({
   question,
   answers,
-  correctAnswer
+  correctAnswer,
+  bgColor
 }) {
   const [isCorrect, setIsCorrect] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
   const [isCorrectDelayed, setIsCorrectDelayed] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
@@ -165,7 +166,10 @@ function Quiz({
     }
   }
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "paying-attention-frontend"
+    className: "paying-attention-frontend",
+    style: {
+      backgroundColor: bgColor
+    }
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, question), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, answers.map(function (answer, index) {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {
       className: (isCorrectDelayed === true && index === correctAnswer ? "no-click" : "") + (isCorrectDelayed == true && index !== correctAnswer ? "fade-incorrect" : ""),
