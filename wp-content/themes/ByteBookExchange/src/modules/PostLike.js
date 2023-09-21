@@ -35,6 +35,8 @@ class PostLike {
         { postId: currentLikeBox.getAttribute("data-post") }
       );
       if (response.data != "Only logged in users can create like a post.") {
+        alert("Only logged in users can like a post.");
+        window.location.href = "http://bytebookexchange.local/wp-login.php";
         currentLikeBox.setAttribute("data-present", "yes");
         let likeCount = parseInt(
           currentLikeBox.querySelector(".post-like-count").innerHTML,

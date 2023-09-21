@@ -35,6 +35,7 @@ class Like {
         { instructorId: currentLikeBox.getAttribute("data-instructor") }
       );
       if (response.data != "Only logged in users can create a like.") {
+        alert("Only logged in users can like");
         currentLikeBox.setAttribute("data-exists", "yes");
         var likeCount = parseInt(
           currentLikeBox.querySelector(".like-count").innerHTML,
