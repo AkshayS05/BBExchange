@@ -5,6 +5,22 @@ require get_theme_file_path('/includes/like-route.php');
 require get_theme_file_path('/includes/post-like-route.php');
 
 add_action('rest_api_init','bbe_custom_rest');
+add_action('rest_api_init', 'bbeCheckLoginRoute');
+
+function bbeCheckLoginRoute(){
+  register_rest_route('bbe/v1', 'checkLogin', array(
+    'methods' => 'GET',
+    'callback' => 'checkUserLoginStatus',
+  ));
+}
+
+function checkUserLoginStatus() {
+  if (is_user_logged_in()) {
+    return 'logged-in';
+  } else {
+    return 'not-logged-in';
+  }
+}
 
 function bbe_custom_rest(){
   // this function accepts three arguments -> 1. post type you want to customize. 2. name of new field. 3. how to manage this field

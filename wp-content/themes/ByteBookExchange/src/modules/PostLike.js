@@ -30,23 +30,33 @@ class PostLike {
 
   async createPostLike(currentLikeBox) {
     try {
-      const response = await axios.post(
-        `${bbeData.root_url}/wp-json/bbe/v1/managePostLike`,
-        { postId: currentLikeBox.getAttribute("data-post") }
+      // Check if the user is logged in
+      const loginResponse = await axios.get(
+        bbeData.root_url + "/wp-json/bbe/v1/checkLogin"
       );
-      if (response.data != "Only logged in users can create like a post.") {
-        alert("Only logged in users can like a post.");
-        window.location.href = "http://bytebookexchange.com/wp-login.php";
-        currentLikeBox.setAttribute("data-present", "yes");
-        let likeCount = parseInt(
-          currentLikeBox.querySelector(".post-like-count").innerHTML,
-          10
+      if (loginResponse.data === "logged-in") {
+        const response = await axios.post(
+          `${bbeData.root_url}/wp-json/bbe/v1/managePostLike`,
+          { postId: currentLikeBox.getAttribute("data-post") }
         );
-        likeCount++;
-        currentLikeBox.querySelector(".post-like-count").innerHTML = likeCount;
-        currentLikeBox.setAttribute("data-postLike", response.data);
+        if (response.data != "Only logged in users can create like.") {
+          currentLikeBox.setAttribute("data-present", "yes");
+          let likeCount = parseInt(
+            currentLikeBox.querySelector(".post-like-count").innerHTML,
+            10
+          );
+          likeCount++;
+          currentLikeBox.querySelector(".post-like-count").innerHTML =
+            likeCount;
+          currentLikeBox.setAttribute("data-postLike", response.data);
+        }
+
+        // console.log(response.data);
+      } else {
+        // User is not logged in, redirect to the login page
+        alert("Only logged in users can like a post");
+        window.location.href = "http://bytebookexchange.com/wp-login.php";
       }
-      // console.log(response.data);
     } catch (e) {
       console.log("Sorry");
     }
