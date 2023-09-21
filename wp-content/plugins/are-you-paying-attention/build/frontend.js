@@ -142,7 +142,8 @@ function Quiz({
   question,
   answers,
   correctAnswer,
-  bgColor
+  bgColor,
+  theAlignment
 }) {
   const [isCorrect, setIsCorrect] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
   const [isCorrectDelayed, setIsCorrectDelayed] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
@@ -168,7 +169,8 @@ function Quiz({
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "paying-attention-frontend",
     style: {
-      backgroundColor: bgColor
+      backgroundColor: bgColor,
+      textAlign: theAlignment
     }
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, question), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ul", null, answers.map(function (answer, index) {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", {

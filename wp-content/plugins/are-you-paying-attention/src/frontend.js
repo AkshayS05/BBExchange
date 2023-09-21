@@ -11,7 +11,7 @@ divsToUpdate.forEach(function (div) {
   div.classList.remove(".paying-attention-update-me");
 });
 
-function Quiz({ question, answers, correctAnswer, bgColor }) {
+function Quiz({ question, answers, correctAnswer, bgColor, theAlignment }) {
   const [isCorrect, setIsCorrect] = useState(null);
   const [isCorrectDelayed, setIsCorrectDelayed] = useState(null);
 
@@ -37,7 +37,7 @@ function Quiz({ question, answers, correctAnswer, bgColor }) {
   return (
     <div
       className="paying-attention-frontend"
-      style={{ backgroundColor: bgColor }}
+      style={{ backgroundColor: bgColor, textAlign: theAlignment }}
     >
       <p>{question}</p>
       <ul>
