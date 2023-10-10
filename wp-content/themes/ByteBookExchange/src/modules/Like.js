@@ -39,7 +39,7 @@ class Like {
           bbeData.root_url + "/wp-json/bbe/v1/manageLike",
           { instructorId: currentLikeBox.getAttribute("data-instructor") }
         );
-
+        // to create a like, user has to sign in first
         if (response.data != "Only logged in users can like.") {
           currentLikeBox.setAttribute("data-exists", "yes");
           var likeCount = parseInt(
