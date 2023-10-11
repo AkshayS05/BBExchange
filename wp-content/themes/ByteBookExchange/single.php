@@ -31,8 +31,8 @@ while(have_posts()) {
           )
         )
           ));
-
           $existCountStatus = 'no';
+          // if user is logged in
           if(is_user_logged_in()){
             $existCountQuery = new WP_Query(array(
               'author' => get_current_user_id(),
