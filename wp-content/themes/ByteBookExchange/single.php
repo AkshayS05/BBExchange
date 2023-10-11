@@ -9,6 +9,7 @@ while(have_posts()) {
  the_post(); 
   pageBanner();
   ?>
+  <!-- container -->
 
     <div class="container container--narrow page-section">
 
