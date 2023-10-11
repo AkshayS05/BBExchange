@@ -42,6 +42,7 @@ class Like {
         // to create a like, user has to sign in first
         if (response.data != "Only logged in users can like.") {
           currentLikeBox.setAttribute("data-exists", "yes");
+          //to fetch html element
           var likeCount = parseInt(
             currentLikeBox.querySelector(".like-count").innerHTML,
             10
