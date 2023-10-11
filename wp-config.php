@@ -25,7 +25,7 @@ if(file_exists(dirname(__FILE__) . '/local.php')){
 	define( 'DB_NAME', 'local' );
 	define( 'DB_USER', 'root' );
 	define( 'DB_PASSWORD', 'root' );
-	define( 'DB_HOST', 'localhost' );
+	define( 'DB_HOST', 'bytebookexchange.com' );
 }
 	else{
 	define( 'DB_NAME', 'u217678937_bbeDB');
