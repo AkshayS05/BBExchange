@@ -20,6 +20,7 @@ while(have_posts()) {
 
     <div class="generic-content-post">
       <?php 
+      // for generic-post content
       $postLikeCount = new WP_Query(array(
         'post_type' => 'post_like',
         'meta_query' => array(
