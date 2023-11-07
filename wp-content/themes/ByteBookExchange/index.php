@@ -1,4 +1,5 @@
 <?php
+include('whitespacefix.php');
 get_header();
 
 pageBanner(array(
