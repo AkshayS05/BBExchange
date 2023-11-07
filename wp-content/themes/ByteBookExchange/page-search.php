@@ -1,6 +1,6 @@
-<!--  A single page not a post with page.php -->
-<!-- This is a convention in wordpress to creaste a file name single.php which will hold the single page details whenever use visits any of the exisiting posts -->
 <?php
+/*  A single page not a post with page.php -->
+<!-- This is a convention in wordpress to creaste a file name single.php which will hold the single page details whenever use visits any of the exisiting posts -->*/
 get_header();
 // this is a wordpress function to loop until there are pages
 while(have_posts()) {
