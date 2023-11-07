@@ -1,5 +1,4 @@
 <?php 
-//to get file from includes folder
 require get_theme_file_path('/includes/search-route.php');
 require get_theme_file_path('/includes/like-route.php');
 require get_theme_file_path('/includes/post-like-route.php');
@@ -226,5 +225,4 @@ function ignoreCertainFiles($exclude_filters){
   
 
   return $exclude_filters;
-}
-?>
+}?>
