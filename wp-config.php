@@ -30,7 +30,7 @@ if(file_exists(dirname(__FILE__) . '/local.php')){
 	else{
 	define( 'DB_NAME', 'u217678937_bbeDB');
 	define( 'DB_USER', 'u217678937_bbe');
-	define( 'DB_PASSWORD', 'Jamesmath;)1');
+	define( 'DB_PASSWORD', 'Jamesmath;)123');
 	define( 'DB_HOST', 'localhost' );
 }
 

@@ -1,4 +1,5 @@
 <?php
+// fot xml sitemap
 include('whitespacefix.php');
 get_header();
 
