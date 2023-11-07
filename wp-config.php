@@ -1,5 +1,4 @@
-<?php
-if(file_exists(dirname(__FILE__) . '/local.php')){
+<?php if(file_exists(dirname(__FILE__) . '/local.php')){
 	define( 'DB_NAME', 'local' );
 	define( 'DB_USER', 'root' );
 	define( 'DB_PASSWORD', 'root' );
